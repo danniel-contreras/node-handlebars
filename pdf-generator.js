@@ -1,55 +1,52 @@
-const fs = require("fs");
-const path = require("path");
-const puppeteer = require('puppeteer');
-const handlebars = require("handlebars");
+var fs = require('fs');
+var pdf = require('dynamic-html-pdf');
+var html = fs.readFileSync('template.html', 'utf8');
 
-async function createPDF(data){
+// Custom handlebar helper
+pdf.registerHelper('ifCond', function (v1, v2, options) {
+    if (v1 === v2) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+})
 
-	var templateHtml = fs.readFileSync(path.join(process.cwd(), 'template.html'), 'utf8');
-	var template = handlebars.compile(templateHtml);
-	var html = template(data);
+var options = {
+    format: "A3",
+    orientation: "portrait",
+    border: "10mm"
+};
 
-	var milis = new Date();
-	milis = milis.getTime();
+var users = [
+    {
+        name: 'aaa',
+        age: 24,
+        dob: '1/1/1991'
+    },
+    {
+        name: 'bbb',
+        age: 25,
+        dob: '1/1/1995'
+    },
+    {
+        name: 'ccc',
+        age: 24,
+        dob: '1/1/1994'
+    }
+];
 
-	var pdfPath = path.join('pdf', `${data.name}-${milis}.pdf`);
+var document = {
+    type: 'buffer',     // 'file' or 'buffer'
+    template: html,
+    context: {
+        users: users
+    },
+    // path: "./output.pdf"    // it is not required if type is buffer
+};
 
-	var options = {
-		width: '1230px',
-		headerTemplate: "<p></p>",
-		footerTemplate: "<p></p>",
-		displayHeaderFooter: false,
-		margin: {
-			top: "10px",
-			bottom: "30px"
-		},
-		printBackground: true,
-		path: pdfPath
-	}
-
-	const browser = await puppeteer.launch({
-		args: ['--no-sandbox'],
-		headless: true
-	});
-
-	var page = await browser.newPage();
-	
-	await page.goto(`data:text/html;charset=UTF-8,${html}`, {
-		waitUntil: 'networkidle0'
-	});
-
-	await page.pdf(options);
-	await browser.close();
-}
-
-const data = {
-	title: "A new Brazilian School",
-	date: "05/12/2018",
-	name: "Rodolfo Luis Marcos",
-	age: 28,
-	birthdate: "12/07/1990",
-	course: "Computer Science",
-	obs: "Graduated in 2014 by Federal University of Lavras, work with Full-Stack development and E-commerce."
-}
-
-createPDF(data);
+pdf.create(document, options)
+    .then(res => {
+        console.log(res.toString("base64"))
+    })
+    .catch(error => {
+        console.error(error)
+    });

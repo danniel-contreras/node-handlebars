@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/rodolfo-marcos07/pdf-generator-sample#readme",
   "dependencies": {
+    "dynamic-html-pdf": "^1.0.4",
     "handlebars": "^4.0.12",
-    "puppeteer": "^1.11.0"
+    "puppeteer": "^19.7.2"
   }
 }
