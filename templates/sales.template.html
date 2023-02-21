@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Document</title>
+  <style>
+    html {
+      -webkit-print-color-adjust: exact;
+      page-break-after: always;
+    }
+
+    @page {
+      margin: 10px;
+    }
+
+    .h-screen {
+      height: 100vh;
+      max-height: 100vh;
+    }
+
+    .w-screen {
+      width: 100vw;
+      max-width: 100vw;
+    }
+
+    .p-5 {
+      padding: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+    }
+
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .w-20 {
+      width: 5rem;
+    }
+
+    .float-right {
+      float: right;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="h-screen w-screen p-5" style="page-break-after:always;height:100vh !important;">
+  <div class="w-full grid grid-cols-2">
+    <div class="w-full">El Sotano - {{title}}</div>
+    <div class="w-full">
+      <img class="w-20 float-right" src="https://i.ibb.co/FhVFR6H/logo.png">
+    </div>
+  </div>
+</body>
+
+</html>

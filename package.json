@@ -4,7 +4,8 @@
   "description": "A simple pdf generator app",
   "main": "pdf.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,14 @@
   },
   "homepage": "https://github.com/rodolfo-marcos07/pdf-generator-sample#readme",
   "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
     "dynamic-html-pdf": "^1.0.4",
+    "express": "^4.18.2",
     "handlebars": "^4.0.12",
     "puppeteer": "^19.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
